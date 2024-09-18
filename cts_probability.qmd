@@ -1,0 +1,16 @@
+
+```{r}
+library(tidyverse)
+library(dslabs)
+```
+
+```{r}
+x <- heights |>
+  filter(sex == "Male") |>
+  pull(height)
+
+F <- function(a) mean(x <= a)
+
+1 - F(70)
+```
+

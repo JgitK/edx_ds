@@ -1,0 +1,71 @@
+```{r}
+library(dslabs)
+library(tidyverse)
+library(gridExtra)
+```
+
+```{r}
+prop.table(table(state.region))
+```
+
+```{r}
+# What proportion of values are less than a?
+heights |>
+  filter(sex == "Male") |>
+  ggplot(aes(height)) +
+  stat_ecdf() +
+  labs(x = "a", y = "F(a)")
+```
+
+```{r}
+# Where are most values located?
+heights |> filter(sex == "Male") |> 
+  ggplot(aes(height)) + 
+  geom_histogram(binwidth = 1, color = "black")
+```
+
+```{r}
+heights |> 
+  filter(sex == "Male") |> 
+  ggplot(aes(height)) + 
+  geom_density(alpha = 0.2, fill = "#00BFC4")
+```
+
+```{r}
+
+# While the histogram is an assumption-free summary, the smoothed density is based on some assumptions.
+p <- heights |> filter(sex == "Male") |> 
+  ggplot(aes(height)) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 1, alpha = 0.5) 
+
+p1 <- p +  geom_line(stat = 'density', adjust = 0.5)
+p2 <- p +  geom_line(stat = 'density', adjust = 2) 
+
+grid.arrange(p1,p2, ncol = 2)
+```
+
+```{r}
+# Mean:
+#m <- sum(x) / length(x)
+
+# Standard Deviation:
+#s <- sqrt(sum((x - m)^2) / length(x))
+```
+
+```{r}
+index <- heights$sex == "Male"
+x <- heights$height[index]
+
+m <- mean(x)
+s <- sd(x)
+```
+
+```{r}
+# Z-score:
+
+z <- scale(x)
+
+# How many men are within 2 SD's of avg height?
+mean(abs(z) < 2)
+```
+
