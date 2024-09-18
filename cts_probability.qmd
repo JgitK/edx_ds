@@ -100,6 +100,46 @@ plot(x, f_x)
 
 # Q3
 
+mean_act = mean(act_scores)
+sd_act = sd(act_scores)
+
+z_scores = (act_scores - mean_act) / sd_act
+
+mean_z_score = mean(z_scores)
+sd_z_score = sd(z_scores)
+
+print(1-pnorm(2, mean_z_score, sd_z_score))
+
+print(dnorm(2, mean_z_score, sd_z_score))
+
+(2 * sd_act) + mean_act
+
+qnorm(.975, mean_act, sd_act)
+
+
+# Q4
+
+
+
+act_score_prob <- function(value) {
+  mean <- 20.9
+  sd <- 5.7
+  prob = pnorm(value, mean, sd)
+  
+  return(prob)
+}
+
+score_probs <- sapply(1:36, act_score_prob)
+
+qnorm(.95, 20.9, 5.7)
+
+p <- seq(0.01, 0.99, 0.01)
+
+sample_quantiles <- quantile(act_scores, p)
+
+theoretical_quantiles <- quantile(qnorm(p, 20.9, 5.7))
+
+plot(theoretical_quantiles, sample_quantiles)
 
 
 ```
